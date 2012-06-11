@@ -47,10 +47,10 @@ wundergroundUrl <- function(features, query, key, settings, format='json') {
 #
 #' @return				nested list
 #' @export
-wundergroundData <- function(features, query, key=wundergroundKey()) {
+wundergroundData <- function(features, query, key=wundergroundKey(), cache=TRUE) {
 	require(rjson)
 	url <- wundergroundUrl(features, query, key, format='json')
-	response <- httpGet(url)
+	response <- httpGet(url, cache=cache)
 	result <- fromJSON(response)
 	return(result)
 }

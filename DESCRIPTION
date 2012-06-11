@@ -3,7 +3,7 @@ Type: Package
 Title: Provides an interface to Weather Underground data
 Version: 0.1
 Date: 2012-06-11
-Depends: rjson, RCurl
+Depends: httpget, rjson
 Author: David Holstius
 Maintainer: David Holstius <david.holstius@berkeley.edu>
 Description: See http://www.wunderground.com/weather/api/
