@@ -50,7 +50,7 @@ wundergroundUrl <- function(features, query, key, settings, format='json') {
 wundergroundData <- function(features, query, key=wundergroundKey(), cache=TRUE) {
 	require(rjson)
 	url <- wundergroundUrl(features, query, key, format='json')
-	response <- httpGet(url, cache=cache)
+	response <- httpGet(url, cache=TRUE)
 	result <- fromJSON(response)
 	return(result)
 }
