@@ -47,10 +47,18 @@ wundergroundUrl <- function(features, query, key, settings, format='json') {
 #
 #' @return				nested list
 #' @export
-wundergroundData <- function(features, query, key=wundergroundKey(), cache=TRUE) {
+wundergroundData <- function(features, query, key=wundergroundKey(), verbose=FALSE, cache=TRUE, throttle=7) {
+	require(httpget)
 	require(rjson)
 	url <- wundergroundUrl(features, query, key, format='json')
-	response <- httpGet(url, cache=TRUE)
+	response <- cacheGet(cacheKey(url))
+	if (is.null(response)) {
+		if (verbose) message('Cache miss: ', url)
+		response <- httpGet(url, cache=cache)
+		Sys.sleep(throttle)
+	} else {
+		if (verbose) message('Cache hit: ', url)
+	}
 	result <- fromJSON(response)
 	return(result)
 }
