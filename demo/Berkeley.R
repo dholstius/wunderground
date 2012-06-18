@@ -1,13 +1,18 @@
 require(wunderground)
 
-# Use your Weather Underground API key here
-Sys.setenv(WUNDERGROUND_API_KEY='4db496439674ad78')
+# Either set your Weather Underground API key as an environment
+# variable, or paste it in here
+key <- Sys.getenv('WUNDERGROUND_API_KEY')
+if (key == '') {
+	key <- readline("Weather Underground API key: ")
+	Sys.setenv(WUNDERGROUND_API_KEY = key)
+}
 
-# Get historical information for "San Francisco"
+# Look up weather stations near Berkeley
 Berkeley <- wundergroundData(features='geolookup', query='CA/Berkeley')
-
-# Do a query on every Personal Weather Station (PWS) near San Francisco
 nearby <- Berkeley$location$nearby_weather_stations
+
+# Do a query on every Personal Weather Station (PWS) near Berkeley
 ids <- sapply(nearby$pws$station, `[[`, 'id')
 PWS <- list()
 for (i in ids) {
